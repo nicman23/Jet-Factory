@@ -28,7 +28,7 @@ fi
 
 # Handles tar archive
 if [[ "${img}" =~ .tar ]]; then
-	bsdtar xpf "${img}" -C "${out}/${NAME}"
+	tar xpf "${img}" -C "${out}/${NAME}" #why?
 else
 	echo "Unrecognzied format, exiting !"
 	exit 1

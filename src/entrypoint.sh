@@ -1,6 +1,6 @@
 #!/bin/bash
 # ENTRYPOINT.SH : Manages distro_avalaible, and launches the sub scripts.
-set -e
+#set -e #not ready yet
 
 # Check if output path is a valid path
 out=$(realpath "${@:$#}")
