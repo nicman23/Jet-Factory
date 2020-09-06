@@ -251,5 +251,7 @@ echo "Done!"
 
 echo "Fix broken ubuntu shit"
 sed 's/TimeoutStartSec=infinity/TimeoutStartSec=5/g' /usr/lib/systemd/system/systemd-time-wait-sync.service > /etc/systemd/system/systemd-time-wait-sync.service
-sed '/\[Service\]/a\\TimeoutStartSec=10' /usr/lib/systemd/system/ssh.service > /etc/systemd/system/ssh.service
+sed '/\[Service\]/a\\TimeoutStartSec=10' -i /usr/lib/systemd/system/ssh.service
+ln -fs /usr/lib/systemd/system/ssh.service /etc/systemd/system/sshd.service
+ln -fs /dev/null /etc/systemd/system/ssh.service
 echo "Done!"
