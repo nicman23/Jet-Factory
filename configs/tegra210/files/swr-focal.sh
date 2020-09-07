@@ -240,7 +240,21 @@ btcdyn_dsns_row0=5,-120,0,-52,-72
 
 EOF
 
+cat << EOF > /etc/systemd/system/r2p.service
+[Unit]
+Description=Setup r2p
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/bash -c 'echo 1 > /sys/devices/r2p/default_payload_ready' 
+RemainAfterExit=true
+
+[Install]
+WantedBy=multi-user.target
+
+EOF
 systemctl enable upower
+systemctl enable r2p
 apt clean
 
 mkdir -p /usr/share/alsa/ucm/tegra-s/
