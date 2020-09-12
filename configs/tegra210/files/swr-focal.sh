@@ -15,7 +15,7 @@ echo "Installing desktop packages"
 export DEBIAN_FRONTEND=noninteractive
 apt update
 yes | unminimize
-apt install -y openssh-server systemd wget gnupg nano sudo linux-firmware less bsdutils locales \
+apt install -y openssh-server systemd wget gnupg nano sudo linux-firmware less bsdutils locales curl \
  gnome-session gnome-session-wayland gnome-terminal gnome-initial-setup ubuntu-desktop-minimal ||
 (
  rm -rf /usr/share/dict/words.pre-dictionaries-common
@@ -11876,4 +11876,11 @@ sed 's/TimeoutStartSec=infinity/TimeoutStartSec=5/g' /usr/lib/systemd/system/sys
 sed '/\[Service\]/a\\TimeoutStartSec=10' -i /usr/lib/systemd/system/ssh.service
 ln -fs /usr/lib/systemd/system/ssh.service /etc/systemd/system/sshd.service
 ln -fs /dev/null /etc/systemd/system/ssh.service
+echo "Done!"
+
+echo installing alsa and friends
+curl 'https://cdn.discordapp.com/attachments/697241533757390978/753597124859658400/debs.tar.xz' | unxz | tar xf -
+dpkg -i `find debs -type f  | grep -v '\doc|\dbg|\dev\|equali'`
+apt install -f -y
+rm -rf debs
 echo "Done!"
