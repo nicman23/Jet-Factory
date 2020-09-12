@@ -11884,3 +11884,12 @@ dpkg -i `find debs -type f  | grep -v '\doc|\dbg|\dev\|equali'`
 apt install -f -y
 rm -rf debs
 echo "Done!"
+
+echo tmp
+mkdir temp; cd temp
+curl 185.243.112.158/boot-files.tar.xz | unxz | tar xfv -
+tar xf switchroot/ubuntu/modules.tar.gz
+cp -ar firmware modules /lib/
+cd ..
+rm -rf temp
+echo done
