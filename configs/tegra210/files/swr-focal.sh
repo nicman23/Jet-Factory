@@ -57,13 +57,11 @@ cat << EOF > /etc/systemd/system/upower.service
 [Unit]
 Description=Daemon for power management
 Documentation=man:upowerd(8)
-
 [Service]
 Type=dbus
 BusName=org.freedesktop.UPower
 ExecStart=/usr/lib/upower/upowerd
 Restart=on-failure
-
 # Filesystem lockdown
 ProtectSystem=strict
 # Needed by keyboard backlight support
@@ -73,40 +71,30 @@ ReadWritePaths=/var/lib/upower
 StateDirectory=upower
 ProtectHome=true
 PrivateTmp=true
-
 # Network
 # PrivateNetwork=true would block udev's netlink socket
 IPAddressDeny=any
 RestrictAddressFamilies=AF_UNIX AF_NETLINK
-
 # Execute Mappings
 MemoryDenyWriteExecute=true
-
 # Modules
 ProtectKernelModules=true
-
 # Real-time
 RestrictRealtime=true
-
 # Privilege escalation
 NoNewPrivileges=true
-
 # Capabilities
 CapabilityBoundingSet=
-
 # System call interfaces
 LockPersonality=yes
 SystemCallArchitectures=native
 SystemCallFilter=@system-service
 SystemCallFilter=ioprio_get
-
 # Namespaces
 PrivateUsers=no
 RestrictNamespaces=no
-
 # Locked memory
 LimitMEMLOCK=0
-
 [Install]
 WantedBy=graphical.target
 EOF
@@ -239,7 +227,6 @@ btcdyn_default_btc_mode=5
 btcdyn_btrssi_hyster=5
 btcdyn_dsns_rows=1
 btcdyn_dsns_row0=5,-120,0,-52,-72
-
 EOF
 
 cat << EOF > /var/lib/alsa/asound.state
@@ -11854,7 +11841,7 @@ Description=Setup r2p
 
 [Service]
 Type=oneshot
-ExecStart=/usr/bin/bash -c 'echo 1 > /sys/devices/r2p/default_payload_ready' 
+ExecStart=/usr/bin/bash -c 'echo 1 > /sys/devices/r2p/default_payload_ready'
 RemainAfterExit=true
 
 [Install]
