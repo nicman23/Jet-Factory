@@ -27,7 +27,18 @@ if [[ -n "${HEKATE_ID}" ]]; then
 fi
 
 # Create image
-virt-make-fs --type=ext4 --format=raw --size=+512MB "${out}/${NAME}/" ${guestfs_img}
+size=$(($(du -sb "${out}/${NAME}/" | cut -f1) + (512*1024*1024)))
+fallocate -l $size ${guestfs_img}
+unset size
+mkfs.btrfs ${guestfs_img}
+mount -t btrfs -o compress-force=lzo ${guestfs_img} /mnt/
+rm -rf /mnt/home
+btrfs subvolume create /mnt/home
+apt install -y rsync # TODO change this ugliness
+rsync -aAxX --numeric-ids --info=progress2 --no-i-r "${out}/${NAME}/*" /mnt/
+echo '/ /dev/root btrfs compress=lzo,remount 0 1' > /mnt/etc/fstab
+umount /mnt
+sync
 
 # Zerofree the image produced
 zerofree -n ${guestfs_img}
